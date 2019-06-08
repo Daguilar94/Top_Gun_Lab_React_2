@@ -1,33 +1,200 @@
 .App {
   text-align: center;
+  padding: 5px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+h2, p {
+  margin: 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.personal-card {
+  display: inline-block;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px black;
+}
+
+.color-cards__title  {
+  background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 60px;
+}
+
+.color-cards-container {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, 150px);
+  grid-gap: 10px;
+}
+
+.color-card {
+  position: relative;
+  height: 150px;
+  width: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  border-radius: 5px;
   color: white;
+  text-shadow: 2px 2px 3px rgba(100,100,100,0.8);
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  transition: background 0.35s ease-in-out;
 }
 
-.App-link {
-  color: #61dafb;
+.color-card::after {
+  content: "";
+  border-radius: 5px;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: opacity 0.35s ease-in-out;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.color-card:hover::after {
+  opacity: 1;
 }
+
+/* ----------COLORS---------- */
+
+.color-blue {
+  background-color: #2f2f85;
+}
+
+.color-blue--light {
+  background-color: #5757f7;
+}
+
+
+.color-red {
+  background-color: #9a0000;
+}
+
+.color-red--light {
+  background-color: #ff6868;
+}
+
+
+.color-green {
+  background-color: #807100;
+}
+
+.color-green--light {
+  background-color: #ffe310;
+}
+
+
+.color-black {
+  background-color: #000000;
+}
+
+.color-black--light {
+  background-color: #424242;
+}
+
+
+.color-white {
+  background-color: #e3e3e3;
+}
+
+.color-white--light {
+  background-color: #fff;
+}
+
+
+.color-yellow {
+  background-color: #dbe001;
+}
+
+.color-yellow--light {
+  background-color: #fbff60;
+}
+
+
+.color-pink {
+  background-color: #ef0056;
+}
+
+.color-pink--light {
+  background-color: #ff83b0;
+}
+
+
+.color-brown {
+  background-color: #6d3300;
+}
+
+.color-brown--light {
+  background-color: #b3733a;
+}
+
+
+.color-orange {
+  background-color: #f58a00;
+}
+
+.color-orange--light {
+  background-color: #ffb04a;
+}
+
+
+.color-purple {
+  background-color: #8102ce;
+}
+
+.color-purple--light {
+  background-color: #bf62f7;
+}
+
+
+.color-gray {
+  background-color: #616161;
+}
+
+.color-gray--light {
+  background-color: #969696;
+}
+
+
+.color-Blush {
+  background-color: #af4867;
+}
+
+.color-Blush--light {
+  background-color: #DE5D83;
+}
+
+
+.color-Capri {
+  background-color: #03779e;
+}
+
+.color-Capri--light {
+  background-color: #00BFFF;
+}
+
+
+.color-Aero {
+  background-color: #476c88;
+}
+
+.color-Aero--light {
+  background-color: #7CB9E8	;
+}
+
+
+.color-Cream {
+  background-color:#c1c09d;
+}
+
+.color-Cream--light {
+  background-color: #FFFDD0;
+}
+
+
