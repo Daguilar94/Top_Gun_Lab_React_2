@@ -5,49 +5,8 @@ import { COLORS } from "./mocked-data/colors";
 
 class App extends Component {
   state = {
-    colors: COLORS,
-    filterText: "",
-    nameText: "",
-    lightClassText: "",
-    darkClassText: "",
-    isLight: false
+    colors: COLORS
   }
-
-  handleTextChange = (e, keyText) => {
-    const value = e.target.value;
-    this.setState({ [keyText]: value })
-  }
-
-  handleIsLight = (e) => {
-    const value = e.target.checked;
-    this.setState({ isLight: value })
-  }
-
-  createColor = (e) => {
-    e.preventDefault();
-    const {
-      nameText: name,
-      lightClassText: lightClass,
-      darkClassText: darkClass,
-      isLight
-    } = this.state;
-
-    const newColor = {
-      id: Math.random(),
-      name,
-      isLight,
-      darkClass,
-      lightClass
-    }
-    
-    this.setState(prevState => ({
-      colors: prevState.colors.concat(newColor),
-      nameText: "",
-      lightClassText: "",
-      darkClassText: "",
-      isLight: false
-    }))
-  } 
 
   changeTone = (id) => {
     this.setState((prevState) => {
@@ -76,31 +35,20 @@ class App extends Component {
   }
 
   render() {
-    const {
-      colors,
-      filterText,
-      nameText,
-      lightClassText,
-      darkClassText,
-      isLight
-    } = this.state;
-    
-    const filteredColors = colors.filter(color => color.name.includes(filterText));
+    const { colors } = this.state;
 
     return (
       <div className="App">
         <h1 className="color-cards__title">COLOR CARDS</h1>
         <div className="filter-container">
           <input
-            onChange={(e) => this.handleTextChange(e, "filterText")}
             placeholder="Filter by color name"
             className="filter-field"
             type="text"
-            value={filterText}
           />
         </div>
         <main className="color-cards-container">
-          {filteredColors.map(color => (
+          {colors.map(color => (
             <ColorCard
               key={color.id}
               changeColor={() => this.changeTone(color.id)}
@@ -114,27 +62,19 @@ class App extends Component {
           <input
             type="text"
             placeholder="name"
-            onChange={(e) => this.handleTextChange(e, "nameText")}
-            value={nameText}
           />
           <input
             type="text"
             placeholder="light class"
-            onChange={(e) => this.handleTextChange(e, "lightClassText")}
-            value={lightClassText}
           />
           <input
             type="text"
             placeholder="dark class"
-            onChange={(e) => this.handleTextChange(e, "darkClassText")}
-            value={darkClassText}
           />
           <input
             name="is-light"
             type="checkbox"
             className="is-light-checkbox"
-            onChange={this.handleIsLight}
-            value={isLight}
           />
           <label htmlFor="is-light">Is light</label>
           <button type="submit" className="create-color">Create!</button>
@@ -145,3 +85,40 @@ class App extends Component {
 }
 
 export default App;
+
+// ------------------------------------------------------------------------
+
+// 1. Crear un nuevo key en el estado llamado "filterText" e inicializarlo con
+// un string vacío.
+
+// 2. Agregar un evento en el input del filtro para que detecte cuando este texto
+// cambia y igualar el valor del input al valor del estado.
+
+// 3. crear un método en la componente para actualizar el texto del filtro
+// en el estado cuando este sea cambiado.
+
+// 4. Filtrar los colores del load en el método render y actualizar el arreglo al
+//  que se le hace el map de modo que se muestren sólo los colores
+// filtrados y no todos.
+
+// 5. Realizar el mismo procedimiento que se hizo con en los pasos 1, 2 y 3, pero
+// esta vez para los campos: "nameText", "lightClassText", "darkClassText".
+// que están ubicados en el formulario para crear un color.
+
+// 6. Crear un campo adicional en el estado para el campo "isLight" que corresponde
+// al checkbox del formulario para crear un color, esta vez se debe inicializar el
+// valur en el estado en false.
+// PISTAS:
+// * El valor de este tipo de input no se obtiene en el event.target.value, sino
+//   en el event.target.checked.
+// * Por esto el valor del estado debe ser agregado en el JSX no como el prop value,
+//   sino como el prop checked.
+
+// 7. Por último escuchar el evento submit en el form para crear un color y crea un
+// método en el cual se altere el estado creando un nuevo color en el arreglo
+// de colores y poniendo el formulario de crear color de nuevo en blanco.
+// PISTA:
+// * Por defecto el navegador envía una petición HTTP cuando se hace submit a un
+//   formulario, por esto es necesario utilizar el evento y
+//   el método preventDefault() para evitar que la página se recargue.
+
