@@ -82,10 +82,9 @@ class App extends Component {
       nameText,
       lightClassText,
       darkClassText,
-      isLight,
-      showWarningMessage
+      isLight
     } = this.state;
-    
+
     const filteredColors = colors.filter(color => color.name.includes(filterText));
 
     return (
@@ -111,12 +110,10 @@ class App extends Component {
             />
           ))}
         </main>
-        {showWarningMessage &&
-          <h3 className="warning-msg">
-            Hey Hey! Watch out
-            <span role="img" aria-label="angry-face">😠</span>
-          </h3>
-        }
+        <h3 className="warning-msg">
+          Hey Hey! Watch out
+          <span role="img" aria-label="angry-face">😠</span>
+        </h3>
         <h2 className="create-color-title">Create a color!</h2>
         <form className="create-color-form" onSubmit={this.createColor}>
           <input
