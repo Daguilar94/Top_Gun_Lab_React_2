@@ -4,14 +4,17 @@ function ColorCard({
     name,
     isLight,
     lightClass,
-    darkClass
+    darkClass,
+    changeColor,
+    deleteColor
 }) {
     const colorClassName = isLight ? lightClass : darkClass;
     const colorTone = isLight ? "light" : "dark";
     return (
-        <div className={`color-card ${colorClassName}`}>
+        <div onClick={changeColor} className={`color-card ${colorClassName}`}>
             <h2>{name}</h2>
             <p>{colorTone}</p>
+            <button onClick={deleteColor} className="delete-color">x</button>
         </div>
     );
 } 

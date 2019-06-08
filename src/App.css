@@ -16,6 +16,7 @@ h2, p {
 }
 
 .color-cards__title  {
+  display: inline-block;
   background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
   background-clip: text;
   -webkit-background-clip: text;
@@ -59,6 +60,23 @@ h2, p {
 
 .color-card:hover::after {
   opacity: 1;
+  z-index: -1;
+}
+
+.delete-color {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: transparent;
+  border-radius: 3px;
+  border: 1px solid black;
+  transform: scale(1);
+  transition: transform 0.35s ease-in-out;
+}
+
+.color-card:hover .delete-color:hover {
+  transform: scale(1.05);
+  transition: transform 0.35s ease-in-out;
 }
 
 /* ----------COLORS---------- */
