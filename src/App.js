@@ -1,22 +1,35 @@
 import React, { Component } from 'react';
 import './App.css';
 import ColorCard from "./components/ColorCard";
-import { COLORS } from "./mocked-data/colors";
+import axios from "axios";
 
 class App extends Component {
   state = {
-    colors: COLORS,
+    colors: [],
     filterText: "",
     nameText: "",
     lightClassText: "",
     darkClassText: "",
     isLight: false,
     windowWidth: window.innerWidth,
-    showWarningMessage: false
+    showWarningMessage: false,
+    fetchError: false,
+    error: ""
   }
 
   componentDidMount = () => {
-    window.addEventListener('resize', this.updateWidth)
+    window.addEventListener('resize', this.updateWidth);
+    axios.get('http://localhost:3004/colors')
+      .then(response => {
+        this.setState({
+          colors: response.data,
+          fetchError: false,
+          error: ""
+        })
+      })
+      .catch(error => {
+        this.setState({ fetchError: true, error: error.message });
+      })
   }
 
   componentWillUnmount = () => {
@@ -37,7 +50,7 @@ class App extends Component {
     const sameLength = prevColors.length === colors.length;
     const changedMessage = prevShowWarningMessage !== showWarningMessage;
 
-    if (!sameLength && !showWarningMessage) {
+    if (!sameLength && !showWarningMessage && prevColors.length) {
       this.setState({ showWarningMessage: true });
     }
     if (sameLength && !changedMessage && showWarningMessage) {
@@ -118,7 +131,9 @@ class App extends Component {
       darkClassText,
       isLight,
       windowWidth,
-      showWarningMessage
+      showWarningMessage,
+      fetchError,
+      error
     } = this.state;
     
     const filteredColors = colors.filter(color => color.name.includes(filterText));
@@ -137,6 +152,19 @@ class App extends Component {
           />
         </div>
         <main className="color-cards-container">
+          {fetchError &&
+            <p className="error">
+              There was an error fetching colors
+              <span
+                className="icon"
+                role="img"
+                aria-label="angry-face"
+              >
+                😔
+              </span>
+              {error}
+            </p>
+          }
           {filteredColors.map(color => (
             <ColorCard
               key={color.id}
@@ -149,7 +177,13 @@ class App extends Component {
         {showWarningMessage &&
           <h3 className="warning-msg">
             Hey Hey! Watch out
-            <span role="img" aria-label="angry-face">😠</span>
+            <span
+              className="icon"
+              role="img"
+              aria-label="angry-face"
+            >
+              😠
+            </span>
           </h3>
         }
         <h2 className="create-color-title">Create a color!</h2>

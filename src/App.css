@@ -11,6 +11,15 @@ input {
   font-size: 16px;
 }
 
+.error {
+  color: red;
+}
+
+.icon {
+  padding-top: 10px;
+  margin-left: 10px;
+}
+
 .App {
   box-sizing: border-box;
   text-align: center;
@@ -108,11 +117,6 @@ input {
   align-items: center;
   justify-content: center;
   color: red;
-}
-
-.warning-msg span {
-  padding-top: 10px;
-  margin-left: 10px;
 }
 
 .create-color-title {
