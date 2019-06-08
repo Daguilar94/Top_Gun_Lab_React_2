@@ -5,8 +5,49 @@ import { COLORS } from "./mocked-data/colors";
 
 class App extends Component {
   state = {
-    colors: COLORS
+    colors: COLORS,
+    filterText: "",
+    nameText: "",
+    lightClassText: "",
+    darkClassText: "",
+    isLight: false
   }
+
+  handleTextChange = (e, keyText) => {
+    const value = e.target.value;
+    this.setState({ [keyText]: value })
+  }
+
+  handleIsLight = (e) => {
+    const value = e.target.checked;
+    this.setState({ isLight: value })
+  }
+
+  createColor = (e) => {
+    e.preventDefault();
+    const {
+      nameText: name,
+      lightClassText: lightClass,
+      darkClassText: darkClass,
+      isLight
+    } = this.state;
+
+    const newColor = {
+      id: Math.random(),
+      name,
+      isLight,
+      darkClass,
+      lightClass
+    }
+    
+    this.setState(prevState => ({
+      colors: prevState.colors.concat(newColor),
+      nameText: "",
+      lightClassText: "",
+      darkClassText: "",
+      isLight: false
+    }))
+  } 
 
   changeTone = (id) => {
     this.setState((prevState) => {
@@ -26,7 +67,6 @@ class App extends Component {
 
   deleteColor = (e, id) => {
     e.stopPropagation();
-    console.log(id)
     this.setState((prevState) => {
       const oldColors = prevState.colors;
       return ({
@@ -36,12 +76,31 @@ class App extends Component {
   }
 
   render() {
-    const { colors } = this.state;
+    const {
+      colors,
+      filterText,
+      nameText,
+      lightClassText,
+      darkClassText,
+      isLight
+    } = this.state;
+    
+    const filteredColors = colors.filter(color => color.name.includes(filterText));
+
     return (
       <div className="App">
         <h1 className="color-cards__title">COLOR CARDS</h1>
+        <div className="filter-container">
+          <input
+            onChange={(e) => this.handleTextChange(e, "filterText")}
+            placeholder="Filter by color name"
+            className="filter-field"
+            type="text"
+            value={filterText}
+          />
+        </div>
         <main className="color-cards-container">
-          {colors.map(color => (
+          {filteredColors.map(color => (
             <ColorCard
               key={color.id}
               changeColor={() => this.changeTone(color.id)}
@@ -50,6 +109,36 @@ class App extends Component {
             />
           ))}
         </main>
+        <h2 className="create-color-title">Create a color!</h2>
+        <form className="create-color-form" onSubmit={this.createColor}>
+          <input
+            type="text"
+            placeholder="name"
+            onChange={(e) => this.handleTextChange(e, "nameText")}
+            value={nameText}
+          />
+          <input
+            type="text"
+            placeholder="light class"
+            onChange={(e) => this.handleTextChange(e, "lightClassText")}
+            value={lightClassText}
+          />
+          <input
+            type="text"
+            placeholder="dark class"
+            onChange={(e) => this.handleTextChange(e, "darkClassText")}
+            value={darkClassText}
+          />
+          <input
+            name="is-light"
+            type="checkbox"
+            className="is-light-checkbox"
+            onChange={this.handleIsLight}
+            value={isLight}
+          />
+          <label htmlFor="is-light">Is light</label>
+          <button type="submit" className="create-color">Create!</button>
+        </form>
       </div>
     );
   }

@@ -1,10 +1,23 @@
 .App {
+  box-sizing: border-box;
   text-align: center;
   padding: 5px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 h2, p {
   margin: 0;
+}
+
+input {
+  border-radius: 10px;
+  border: 1px solid #03779e;
+  margin-left: 10px;
+  height: 25px;
+  padding-left: 10px;
+  font-size: 16px;
 }
 
 .personal-card {
@@ -22,13 +35,21 @@ h2, p {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 60px;
+  margin-bottom: 20px;
+}
+
+.filter-container {
+  margin: 0 0 20px 0;
 }
 
 .color-cards-container {
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(auto-fit, 150px);
+  grid-template-rows: repeat(auto-fit, 150px);
   grid-gap: 10px;
+  flex-grow: 1;
+  overflow: auto;
 }
 
 .color-card {
@@ -77,6 +98,32 @@ h2, p {
 .color-card:hover .delete-color:hover {
   transform: scale(1.05);
   transition: transform 0.35s ease-in-out;
+}
+
+.create-color-title {
+  color: #03779e;
+}
+
+.create-color-form {
+  margin: 20px 0 30px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.is-light-checkbox {
+  margin-left: 10px;
+}
+
+.create-color {
+  height: 30px;
+  border: none;
+  background: #03779e;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-left: 20px;
+  font-weight: bold;
 }
 
 /* ----------COLORS---------- */
