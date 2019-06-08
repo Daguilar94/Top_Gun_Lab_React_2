@@ -10,42 +10,8 @@ class App extends Component {
     nameText: "",
     lightClassText: "",
     darkClassText: "",
-    isLight: false,
-    windowWidth: window.innerWidth,
-    showWarningMessage: false
+    isLight: false
   }
-
-  componentDidMount = () => {
-    window.addEventListener('resize', this.updateWidth)
-  }
-
-  componentWillUnmount = () => {
-    window.removeEventListener('resize', this.updateWidth)
-  }
-
-  componentDidUpdate = (_, prevState) => {
-    const {
-      colors: prevColors,
-      showWarningMessage: prevShowWarningMessage
-    } = prevState;
-
-    const {
-      colors,
-      showWarningMessage
-    } = this.state;
-
-    const sameLength = prevColors.length === colors.length;
-    const changedMessage = prevShowWarningMessage !== showWarningMessage;
-
-    if (!sameLength && !showWarningMessage) {
-      this.setState({ showWarningMessage: true });
-    }
-    if (sameLength && !changedMessage && showWarningMessage) {
-      this.setState({ showWarningMessage: false });
-    }
-  }
-
-  updateWidth = () => this.setState({ windowWidth: window.innerWidth });
 
   handleTextChange = (e, keyText) => {
     const value = e.target.value;
@@ -117,7 +83,6 @@ class App extends Component {
       lightClassText,
       darkClassText,
       isLight,
-      windowWidth,
       showWarningMessage
     } = this.state;
     
@@ -125,7 +90,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h2 className="window-width"><span>width:</span> {windowWidth} px</h2>
+        <h2 className="window-width"><span>width:</span> px</h2>
         <h1 className="color-cards__title">COLOR CARDS</h1>
         <div className="filter-container">
           <input
@@ -188,3 +153,39 @@ class App extends Component {
 }
 
 export default App;
+
+// -----------------------------------------------------------------
+
+// 1. Crea un nuevo key en el estado del componente llamado "windowWidth"
+// e inicialízalo en el número de pixeles de ancho que tiene el viewPort
+// en ese momento.
+// PISTA: Usa la propiedad "innerWidth" del objeto window para
+//        obtener el ancho de la pantalla.
+
+// 2. En el h2 con clase "window-width" poner el valor del ancho que se
+// creó en el estado en el punto anterior.
+
+// 3. crear un método del componente en el cual se actualice la propiedad
+// "windowWidth" del estado con el ancho de pantalla actual.
+
+// 4. una vez se monte el componente comenzar a escuchar cuando la
+// pantalla cambie de tamaño y cuando esto pase, se debe llamar la función
+// creada en el punto anterior, de modo que se vea en tiempo real
+// el ancho actual de la ventana en el h2 con clase "window-width".
+// PISTA: Usar el evento "resize".
+
+// 5. Se debe remover este listener de la ventana cuando el componente
+// se vaya a desmontar. No tiene sentido seguir escuchando si
+// el componente no está.
+
+// 6. Crear un nuevo key en el estado llamado "showWarningMessage" e
+// inicianízalo en false.
+
+// 7. Renderiza el mensaje contenido en el h3 con clase "warning-msg" siempre
+// y cuando el valor de "showWarningMessage" en el estado sea true.
+
+// 8. Verifica cuando se ha creado o eliminado un "ColorCard" y actualiza
+// el valor de "showWarningMessage" en el estado cuando esto suceda.
+
+// 9. El mensaje debe desaparecer si el usuario hace una acción diferente
+// a crear o eliminar un "ColorCard"
