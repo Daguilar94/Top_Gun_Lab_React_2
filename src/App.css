@@ -1,12 +1,3 @@
-.App {
-  box-sizing: border-box;
-  text-align: center;
-  padding: 5px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
 h2, p {
   margin: 0;
 }
@@ -20,12 +11,23 @@ input {
   font-size: 16px;
 }
 
-.personal-card {
-  display: inline-block;
-  padding: 10px;
+.App {
+  box-sizing: border-box;
   text-align: center;
-  border-radius: 5px;
-  box-shadow: 1px 1px 5px black;
+  padding: 5px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.window-width {
+  padding: 10px 0;
+  color: #03779e;
+}
+
+.window-width span {
+  font-weight: lighter;
+  color: #969696;
 }
 
 .color-cards__title  {
@@ -35,7 +37,7 @@ input {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 60px;
-  margin-bottom: 20px;
+  margin: 10px 0 20px 0;
 }
 
 .filter-container {
@@ -98,6 +100,19 @@ input {
 .color-card:hover .delete-color:hover {
   transform: scale(1.05);
   transition: transform 0.35s ease-in-out;
+}
+
+.warning-msg {
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: red;
+}
+
+.warning-msg span {
+  padding-top: 10px;
+  margin-left: 10px;
 }
 
 .create-color-title {

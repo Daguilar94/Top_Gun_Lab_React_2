@@ -10,8 +10,42 @@ class App extends Component {
     nameText: "",
     lightClassText: "",
     darkClassText: "",
-    isLight: false
+    isLight: false,
+    windowWidth: window.innerWidth,
+    showWarningMessage: false
   }
+
+  componentDidMount = () => {
+    window.addEventListener('resize', this.updateWidth)
+  }
+
+  componentWillUnmount = () => {
+    window.removeEventListener('resize', this.updateWidth)
+  }
+
+  componentDidUpdate = (_, prevState) => {
+    const {
+      colors: prevColors,
+      showWarningMessage: prevShowWarningMessage
+    } = prevState;
+
+    const {
+      colors,
+      showWarningMessage
+    } = this.state;
+
+    const sameLength = prevColors.length === colors.length;
+    const changedMessage = prevShowWarningMessage !== showWarningMessage;
+
+    if (!sameLength && !showWarningMessage) {
+      this.setState({ showWarningMessage: true });
+    }
+    if (sameLength && !changedMessage && showWarningMessage) {
+      this.setState({ showWarningMessage: false });
+    }
+  }
+
+  updateWidth = () => this.setState({ windowWidth: window.innerWidth });
 
   handleTextChange = (e, keyText) => {
     const value = e.target.value;
@@ -82,13 +116,16 @@ class App extends Component {
       nameText,
       lightClassText,
       darkClassText,
-      isLight
+      isLight,
+      windowWidth,
+      showWarningMessage
     } = this.state;
     
     const filteredColors = colors.filter(color => color.name.includes(filterText));
 
     return (
       <div className="App">
+        <h2 className="window-width"><span>width:</span> {windowWidth} px</h2>
         <h1 className="color-cards__title">COLOR CARDS</h1>
         <div className="filter-container">
           <input
@@ -109,6 +146,12 @@ class App extends Component {
             />
           ))}
         </main>
+        {showWarningMessage &&
+          <h3 className="warning-msg">
+            Hey Hey! Watch out
+            <span role="img" aria-label="angry-face">😠</span>
+          </h3>
+        }
         <h2 className="create-color-title">Create a color!</h2>
         <form className="create-color-form" onSubmit={this.createColor}>
           <input
