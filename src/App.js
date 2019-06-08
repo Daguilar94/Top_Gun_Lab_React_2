@@ -1,35 +1,22 @@
 import React, { Component } from 'react';
 import './App.css';
+import { COLORS } from "./mocked-data/colors";
 import ColorCard from "./components/ColorCard";
-import axios from "axios";
 
 class App extends Component {
   state = {
-    colors: [],
+    colors: COLORS,
     filterText: "",
     nameText: "",
     lightClassText: "",
     darkClassText: "",
     isLight: false,
     windowWidth: window.innerWidth,
-    showWarningMessage: false,
-    fetchError: false,
-    error: ""
+    showWarningMessage: false
   }
 
   componentDidMount = () => {
     window.addEventListener('resize', this.updateWidth);
-    axios.get('http://localhost:3004/colors')
-      .then(response => {
-        this.setState({
-          colors: response.data,
-          fetchError: false,
-          error: ""
-        })
-      })
-      .catch(error => {
-        this.setState({ fetchError: true, error: error.message });
-      })
   }
 
   componentWillUnmount = () => {
@@ -131,9 +118,7 @@ class App extends Component {
       darkClassText,
       isLight,
       windowWidth,
-      showWarningMessage,
-      fetchError,
-      error
+      showWarningMessage
     } = this.state;
     
     const filteredColors = colors.filter(color => color.name.includes(filterText));
@@ -152,19 +137,16 @@ class App extends Component {
           />
         </div>
         <main className="color-cards-container">
-          {fetchError &&
-            <p className="error">
-              There was an error fetching colors
-              <span
-                className="icon"
-                role="img"
-                aria-label="angry-face"
-              >
-                😔
-              </span>
-              {error}
-            </p>
-          }
+          <p className="error">
+            There was an error fetching colors
+            <span
+              className="icon"
+              role="img"
+              aria-label="angry-face"
+            >
+              😔
+            </span>
+          </p>
           {filteredColors.map(color => (
             <ColorCard
               key={color.id}
@@ -222,3 +204,34 @@ class App extends Component {
 }
 
 export default App;
+
+// -----------------------------------------------------------------
+// 1. Instalar json-server globalmente con el siguiente comando:
+// npm install -g json-server
+
+// 2. instalar axios con el siguiente comando:
+// npm install axios
+
+// 3. correr el siguiente comando en otra ventana de la terminal que también
+// esté dentro de la carpeta del proyecto:
+// json-server --watch db.json --port 3004
+
+// 4. Cambiar el estado inicial de "colors" a un array vacío
+
+// 5. Importar axios
+
+// 6. Hacer una petición GET a la siguiente URL
+// "http://localhost:3004/colors" 
+// Y actualizar el estado con los colores que llegan en la respuesta
+// de la petición.
+
+// 7. crear dos keys nuevos en el estado: "fetchError" y "error".
+// "fetchError" se inicializa en false y "error" como un string vacío.
+// En caso de que haya un error en la petición, actualizar el estado con
+// "fetchError" como true y "error" igual al error que venga en el
+// error de la petición.
+
+// 8. Mostrar el mensaje de error contenido en la etiqueta p con
+// clase "error" dependiendo del valor de "fetchError"
+// en el estado y mostrar el error contenido en el key "error" dentro
+// de ese mismo <p>.
