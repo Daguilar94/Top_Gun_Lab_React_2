@@ -134,7 +134,7 @@ class App extends Component {
             type="checkbox"
             className="is-light-checkbox"
             onChange={this.handleIsLight}
-            value={isLight}
+            checked={isLight}
           />
           <label htmlFor="is-light">Is light</label>
           <button type="submit" className="create-color">Create!</button>
