@@ -25,8 +25,7 @@ class App extends Component {
 
   componentDidUpdate = (_, prevState) => {
     const {
-      colors: prevColors,
-      showWarningMessage: prevShowWarningMessage
+      colors: prevColors
     } = prevState;
 
     const {
@@ -35,13 +34,9 @@ class App extends Component {
     } = this.state;
 
     const sameLength = prevColors.length === colors.length;
-    const changedMessage = prevShowWarningMessage !== showWarningMessage;
 
-    if (!sameLength && !showWarningMessage && prevColors.length) {
-      this.setState({ showWarningMessage: true });
-    }
-    if (sameLength && !changedMessage && showWarningMessage) {
-      this.setState({ showWarningMessage: false });
+    if (sameLength && showWarningMessage) {
+      this.setState({ showWarningMessage: false })
     }
   }
 
@@ -79,7 +74,8 @@ class App extends Component {
       nameText: "",
       lightClassText: "",
       darkClassText: "",
-      isLight: false
+      isLight: false,
+      showWarningMessage: true
     }))
   } 
 
@@ -104,7 +100,8 @@ class App extends Component {
     this.setState((prevState) => {
       const oldColors = prevState.colors;
       return ({
-        colors: oldColors.filter(color => color.id !== id)
+        colors: oldColors.filter(color => color.id !== id),
+        showWarningMessage: true
       })
     })
   }
